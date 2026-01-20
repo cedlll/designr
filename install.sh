@@ -2,11 +2,11 @@ cat > install << 'EOF'
 #!/bin/bash
 
 # designr installer
-# https://github.com/cedlll/designr
+# https://cedlll.github.io/designr
 
 set -e
 
-RULES_URL="https://github.com/cedlll/designr/rules.md"
+RULES_URL="https://cedlll.github.io/designr/rules.md"
 INSTALLED=0
 
 echo "Installing designr rules..."
