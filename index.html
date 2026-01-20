@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="light" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 fill=%22white%22/></svg>">
   <title>designr</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -41,6 +42,7 @@
       background: hsl(var(--background));
       color: hsl(var(--foreground));
       font-family: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-weight: 500;
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
@@ -208,7 +210,7 @@
     .code {
       margin-top: 0.9rem;
       border: 1px solid hsl(var(--border));
-      background: hsl(var(--muted));
+      background: hsl(var(--secondary) / 0.5);
       border-radius: calc(var(--radius) - 2px);
       position: relative;
       overflow: visible; /* keep overlay buttons visible */
@@ -242,13 +244,17 @@
 
     .terminal {
       margin-top: 0.75rem;
-      background: hsl(222.2 84% 4.9%);
-      color: hsl(210 40% 98%);
-      border: 1px solid color-mix(in oklch, black 18%, transparent);
+      background: hsl(var(--card));
+      color: hsl(var(--foreground));
+      border: 1px solid hsl(var(--border));
       border-radius: var(--radius);
-      padding: 0.85rem 1rem;
-      position: relative;
+      padding: 1.25rem 3.5rem 1.25rem 1.25rem;
+            position: relative;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 4.5rem;
     }
 
     .terminal code {
@@ -261,11 +267,14 @@
       align-items: baseline;
       gap: 0.75rem;
       min-width: 0;
+      width: 100%;
+      background-color: transparent;
     }
 
     .terminal-prompt {
-      color: color-mix(in oklch, hsl(210 40% 98%) 70%, transparent);
+      color: hsl(var(--muted-foreground));
       flex: none;
+      user-select: none;
     }
 
     .terminal-scroll {
@@ -274,17 +283,17 @@
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       white-space: nowrap;
-      padding-bottom: 0.15rem;
     }
 
     .terminal-divider {
       height: 1px;
-      background: color-mix(in oklch, hsl(210 40% 98%) 14%, transparent);
+      background: hsl(var(--border));
       margin: 0.75rem 0;
+      width: 100%;
     }
 
     .terminal-muted {
-      color: color-mix(in oklch, hsl(210 40% 98%) 55%, transparent);
+      color: hsl(var(--muted-foreground));
     }
 
     .usage-row {
@@ -295,28 +304,36 @@
     }
 
     .copy-icon-btn {
-      position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
-      width: 44px;
-      height: 44px;
+            position: absolute;
+      top: 50%;
+      right: 0.75rem;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid color-mix(in oklch, hsl(210 40% 98%) 14%, transparent);
-      background: transparent;
-      border-radius: calc(var(--radius) - 6px);
-      color: color-mix(in oklch, hsl(210 40% 98%) 70%, transparent);
+      border: 1px solid hsl(var(--border));
+      background: hsl(var(--muted) / 0.5);
+      border-radius: calc(var(--radius) - 4px);
+      color: hsl(var(--muted-foreground));
       cursor: pointer;
+      transition: all 0.15s ease;
     }
-    .copy-icon-btn:hover { background: color-mix(in oklch, hsl(210 40% 98%) 8%, transparent); }
+    .copy-icon-btn:hover { 
+      background: hsl(var(--accent)); 
+      color: hsl(var(--accent-foreground));
+      border-color: hsl(var(--accent));
+    }
+    .copy-icon-btn:active { transform: translateY(-50%) scale(0.96); }
     .copy-icon-btn:focus-visible {
       outline: 2px solid hsl(var(--ring));
       outline-offset: 2px;
     }
     .copy-icon-btn.copied {
       color: hsl(142.1 70.6% 45.3%);
-      border-color: color-mix(in oklch, hsl(142.1 70.6% 45.3%) 40%, transparent);
+      border-color: hsl(142.1 70.6% 45.3%);
+      background: hsl(142.1 70.6% 45.3% / 0.1);
     }
     .copy-icon-btn.copy-failed {
       color: hsl(var(--destructive));
@@ -352,7 +369,7 @@
       align-items: baseline;
       justify-content: space-between;
       gap: 1rem;
-      margin-bottom: 0.75rem;
+      margin-bottom: 1.25rem;
     }
 
     .section-header h2 {
@@ -435,7 +452,7 @@
       vertical-align: top;
     }
     thead th {
-      background: hsl(var(--muted));
+      background: hsl(var(--secondary) / 0.5);
     }
     .table-wrap {
       width: 100%;
@@ -480,22 +497,21 @@
 <body>
   <header class="topbar">
     <div class="container topbar-inner">
-      <a class="brand" href="#top" aria-label="designr home">
-        <span>designr</span>
-        <small>rules</small>
-      </a>
+
       <nav class="nav" aria-label="Primary">
         <a class="link" href="#install">Install</a>
         <a class="link" href="#rules">Rules</a>
-        <a class="link" href="#manual">Manual</a>
       </nav>
     </div>
         </header>
 
   <main id="top" class="container">
     <section class="hero">
-      <h1>Opinionated rules for modern, accessible, performant web apps.</h1>
-      <p>Drop-in guidance for how your AI coding tools should build UI: defaults, interaction, accessibility, performance, and production polish.</p>
+      <h1>/designr</h1>
+      <p>Opinionated rules for modern, accessible, performant web apps by <a href="https://www.cclee.design/" target="_blank" rel="noreferrer">Cedric Lee</a></p>
+      <div style="margin-top: 0.9rem; display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+        <span id="install-count-badge" class="badge" aria-label="Install count">Loading installs…</span>
+      </div>
     </section>
 
     <section id="install" class="section" aria-label="Installation">
@@ -510,15 +526,10 @@
 
         <div class="terminal-row">
           <span class="terminal-prompt">$</span>
-          <div class="terminal-scroll"><code id="install-command">curl -fsSL https://cedlll.github.io/designr/install | bash</code></div>
+          <div class="terminal-scroll"><code id="install-command">curl -fsSL https://cedlll.github.io/designr/install.sh | bash</code></div>
         </div>
-        <div class="terminal-divider" role="separator" aria-hidden="true"></div>
-        <div class="terminal-row">
-          <span class="terminal-prompt">&gt;</span>
-          <div class="terminal-scroll"><code id="use-command">/designr</code></div>
-        </div>
-      </div>
-      <p class="terminal-help">Auto-detects your coding agent.</p>
+            </div>
+      <p class="terminal-help">Installs the <code>/designr</code> command for Cursor and Claude Code</p>
     </section>
 
     <section class="section" aria-label="Usage">
@@ -533,61 +544,23 @@
           <code>/designr src/App.tsx</code>
           <span class="terminal-muted">— apply these rules with a specific file in context</span>
         </div>
-      </div>
-    </section>
-
-    <section class="section" aria-label="What's included">
-      <div class="card">
-        <div class="section-header">
-          <h2>What’s included</h2>
-          <span class="badge" id="rules-count-badge" aria-live="polite" aria-atomic="true">Loading rules…</span>
         </div>
-        <ul class="rule-list" style="color: hsl(var(--muted-foreground)); margin: 0.5rem 0 0;">
-          <li>Tailwind defaults and conventions</li>
-          <li>Accessible primitives and keyboard/focus behavior</li>
-          <li>Interaction and error handling patterns</li>
-          <li>Animation constraints (compositor-only, reduced motion)</li>
-          <li>Performance guardrails and production standards</li>
-        </ul>
-            </div>
     </section>
 
     <section id="rules" class="section" aria-label="designr rules">
       <div class="section-header">
-        <h2>All rules</h2>
+        <h2>Rules</h2>
         <div class="rules-toolbar">
-          <input id="rules-search" class="input" type="search" inputmode="search" autocomplete="off" placeholder="Search rules (e.g. 'skeleton', 'focus', 'z-index')…" aria-label="Search rules" />
-          <button class="btn btn-primary" type="button" id="copy-all-rules" aria-label="Copy all rules">Copy all</button>
+          <input id="rules-search" class="input" type="search" inputmode="search" autocomplete="off" placeholder="Search rules..." aria-label="Search rules" />
         </div>
-      </div>
+    </div>
       <div id="rules-container" aria-live="polite"></div>
     </section>
 
-    <section id="manual" class="section" aria-label="Manual installation">
-      <div class="card">
-        <div class="section-header">
-          <h2>Manual installation</h2>
-          <a class="link" href="https://cedlll.github.io/designr/rules.md" target="_blank" rel="noreferrer">View docs<span class="sr-only"> (opens in a new tab)</span></a>
-        </div>
-        <p>Prefer to review before installing?</p>
-        <div class="code">
-          <pre aria-label="Manual install commands"><code id="manual-install">curl -fsSL https://cedlll.github.io/designr/install -o install.sh
-cat install.sh
-bash install.sh</code></pre>
-          <span class="code-actions"><button class="btn btn-ghost" type="button" data-copy="#manual-install" aria-label="Copy manual install commands">Copy</button></span>
-        </div>
-      </div>
-    </section>
-
-    <footer class="footer">
-      <span>Questions or suggestions? <a href="https://cedlll.github.io/designr/issues" target="_blank" rel="noreferrer">Open an issue on GitHub<span class="sr-only"> (opens in a new tab)</span></a></span>
-        </footer>
   </main>
 
   <!-- Single source of truth: embed designr.md and parse it into UI -->
   <script type="text/plain" id="rules-md">
-> Type `/designr` to apply these rules to your current project
-
 ## Stack
 
 - MUST use Tailwind CSS defaults unless custom values already exist or are explicitly requested
@@ -799,10 +772,6 @@ bash install.sh</code></pre>
       const badge = document.getElementById("rules-count-badge");
       if (badge) badge.textContent = `${totalRules} rules`;
 
-      const introHtml = intro.length
-        ? `<div class="card" style="margin-bottom: 0.75rem;"><p style="margin: 0; color: hsl(var(--muted-foreground));">${escapeHtml(intro.join(" "))}</p></div>`
-        : "";
-
       const accordions = sections
         .map((s, idx) => {
           const list = s.rules.map((r) => `<li>${escapeHtml(r)}</li>`).join("");
@@ -815,7 +784,7 @@ bash install.sh</code></pre>
               </summary>
               <div class="accordion-body">
                 <ul class="rule-list" data-rule-list>${list}</ul>
-                <div style="margin-top: 0.9rem; display: flex; justify-content: flex-end;">
+                <div style="margin-top: 0.9rem; display: flex; justify-content: flex-start;">
                   <button class="btn" type="button" data-copy-section="${escapeHtml(s.title)}" aria-label="Copy ${escapeHtml(s.title)} rules">Copy section</button>
                 </div>
               </div>
@@ -824,7 +793,7 @@ bash install.sh</code></pre>
         })
         .join("");
 
-      container.innerHTML = introHtml + accordions;
+      container.innerHTML = accordions;
     }
 
     function getRulesMarkdown() {
@@ -937,17 +906,34 @@ bash install.sh</code></pre>
       const parsed = parseRules(md);
       renderRules(parsed);
       wireSearch(md);
+    }
 
-      const copyAll = document.getElementById("copy-all-rules");
-      if (copyAll) {
-        copyAll.addEventListener("click", async () => {
-          await copyText(md, copyAll);
-        });
+    async function initInstallCount() {
+      const el = document.getElementById("install-count-badge");
+      if (!el) return;
+
+      const namespace = "cedlll.github.io";
+      const key = "designr_installs";
+      const url = `https://api.countapi.xyz/get/${encodeURIComponent(namespace)}/${encodeURIComponent(key)}`;
+
+      try {
+        const res = await fetch(url, { cache: "no-store" });
+        if (!res.ok) throw new Error("Request failed");
+        const data = await res.json();
+        const value = typeof data?.value === "number" ? data.value : 0;
+        el.textContent = `${value.toLocaleString()} installs`;
+      } catch {
+        el.textContent = "0 installs";
       }
     }
 
     wireCopyButtons();
     initRules();
+    initInstallCount();
     </script>
 </body>
 </html>
+
+
+
+
