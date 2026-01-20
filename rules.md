@@ -1,4 +1,4 @@
-> Type `/designr-rules` to apply these rules to your current project
+> Type `/designr` to apply these rules to your current project
 
 ## Stack
 
