@@ -2,10 +2,10 @@
 
 ## Stack
 
-MUST use Tailwind CSS defaults unless custom values already exist or are explicitly requested
-MUST use motion/react (formerly framer-motion) when JavaScript animation is required
-SHOULD use tw-animate-css for entrance and micro-animations in Tailwind CSS
-MUST use cn utility (clsx + tailwind-merge) for class logic
+- MUST use Tailwind CSS defaults unless custom values already exist or are explicitly requested
+- MUST use motion/react (formerly framer-motion) when JavaScript animation is required
+- SHOULD use tw-animate-css for entrance and micro-animations in Tailwind CSS
+- MUST use cn utility (clsx + tailwind-merge) for class logic
 
 ## Components
 
