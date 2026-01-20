@@ -1,255 +1,827 @@
-cat > index.html << 'EOF'
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>designr Rules</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #1a1a1a;
-            background: #fafafa;
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-        }
-        
-        header {
-            text-align: center;
-            padding: 4rem 0 2rem;
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-        
-        .subtitle {
-            font-size: 1.25rem;
-            color: #666;
-            margin-bottom: 3rem;
-        }
-        
-        .install-section {
-            background: white;
-            border-radius: 8px;
-            padding: 2rem;
-            margin: 2rem 0;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        
-        .code-block {
-            background: #1a1a1a;
-            color: #00ff00;
-            padding: 1.5rem;
-            border-radius: 6px;
-            font-family: 'Monaco', 'Courier New', monospace;
-            font-size: 0.95rem;
-            overflow-x: auto;
-            position: relative;
-        }
-        
-        .copy-btn {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: #333;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.875rem;
-        }
-        
-        .copy-btn:hover {
-            background: #444;
-        }
-        
-        .copy-btn.copied {
-            background: #00aa00;
-        }
-        
-        .usage-example {
-            background: #f8f8f8;
-            padding: 1rem;
-            border-radius: 4px;
-            margin-top: 1rem;
-            border-left: 4px solid #0066cc;
-        }
-        
-        .supported-tools {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-        
-        .tool-badge {
-            background: #f0f0f0;
-            padding: 0.75rem;
-            border-radius: 6px;
-            text-align: center;
-            font-weight: 500;
-        }
-        
-        .features {
-            list-style: none;
-            margin: 2rem 0;
-        }
-        
-        .features li {
-            padding: 0.5rem 0;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-        
-        .features li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #00aa00;
-            font-weight: bold;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 3rem 0 2rem;
-            color: #666;
-            border-top: 1px solid #e0e0e0;
-            margin-top: 4rem;
-        }
-        
-        a {
-            color: #0066cc;
-            text-decoration: none;
-        }
-        
-        a:hover {
-            text-decoration: underline;
-        }
-        
-        .manual-install {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        .step-number {
-            display: inline-block;
-            background: #0066cc;
-            color: white;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 24px;
-            margin-right: 0.5rem;
-            font-weight: bold;
-            font-size: 0.875rem;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light" />
+  <title>designr</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      /* shadcn-style theme tokens (HSL triplets) */
+      --background: 0 0% 100%;
+      --foreground: 222.2 84% 4.9%;
+      --card: 0 0% 100%;
+      --card-foreground: 222.2 84% 4.9%;
+      --popover: 0 0% 100%;
+      --popover-foreground: 222.2 84% 4.9%;
+      --primary: 222.2 47.4% 11.2%;
+      --primary-foreground: 210 40% 98%;
+      --secondary: 210 40% 96.1%;
+      --secondary-foreground: 222.2 47.4% 11.2%;
+      --muted: 210 40% 96.1%;
+      --muted-foreground: 215.4 16.3% 46.9%;
+      --accent: 210 40% 96.1%;
+      --accent-foreground: 222.2 47.4% 11.2%;
+      --destructive: 0 84.2% 60.2%;
+      --destructive-foreground: 210 40% 98%;
+      --border: 214.3 31.8% 91.4%;
+      --input: 214.3 31.8% 91.4%;
+      --ring: 222.2 84% 4.9%;
+      --radius: 0.75rem;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+      font-family: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: hsl(var(--foreground)); opacity: 0.9; }
+
+    .container {
+      max-width: 56rem;
+      margin: 0 auto;
+      padding: 1.25rem;
+    }
+
+    main.container {
+      /* Component-level responsiveness (preferred over viewport breakpoints) */
+      container-type: inline-size;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(10px);
+      background: color-mix(in oklch, hsl(var(--background)) 82%, transparent);
+      border-bottom: 1px solid hsl(var(--border));
+      padding-top: env(safe-area-inset-top);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+
+    .brand small {
+      font-weight: 600;
+      color: hsl(var(--muted-foreground));
+      text-decoration: none;
+    }
+
+    .nav {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .link {
+      text-decoration: none;
+      color: hsl(var(--muted-foreground));
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.65rem 0.7rem;
+      border-radius: calc(var(--radius) - 6px);
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .link:hover { background: hsl(var(--accent)); color: hsl(var(--accent-foreground)); }
+    .link:focus-visible {
+      outline: 2px solid hsl(var(--ring));
+      outline-offset: 2px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid hsl(var(--border));
+      background: hsl(var(--secondary));
+      color: hsl(var(--secondary-foreground));
+      padding: 0.65rem 0.85rem;
+      border-radius: calc(var(--radius) - 6px);
+      font-weight: 650;
+      font-size: 0.95rem;
+      cursor: pointer;
+      min-height: 44px;
+    }
+    .btn:hover { background: hsl(var(--accent)); }
+    .btn:focus-visible {
+      outline: 2px solid hsl(var(--ring));
+      outline-offset: 2px;
+    }
+    .btn-primary {
+      background: hsl(var(--primary));
+      color: hsl(var(--primary-foreground));
+      border-color: hsl(var(--primary));
+    }
+    .btn-primary:hover { opacity: 0.92; }
+    .btn-ghost { background: transparent; }
+
+    .hero {
+      padding: 2.75rem 0 1.5rem;
+      text-align: left;
+    }
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      text-wrap: balance;
+    }
+    .hero p {
+      margin: 0.85rem 0 0;
+      color: hsl(var(--muted-foreground));
+      font-size: 1.05rem;
+      text-wrap: pretty;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+    .grid > * { min-width: 0; }
+
+    @container (min-width: 48rem) {
+      .grid { grid-template-columns: 1fr 1fr; }
+      .hero { padding: 3.5rem 0 1.75rem; }
+    }
+
+    /* Fallback for browsers without container queries */
+    @media (min-width: 768px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+      .hero { padding: 3.5rem 0 1.75rem; }
+    }
+
+    .card {
+      border: 1px solid hsl(var(--border));
+      background: hsl(var(--card));
+      color: hsl(var(--card-foreground));
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      min-width: 0;
+      box-shadow:
+        0 1px 0 color-mix(in oklch, hsl(var(--foreground)) 6%, transparent),
+        0 8px 22px color-mix(in oklch, hsl(var(--foreground)) 8%, transparent);
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: 1.1rem;
+      letter-spacing: -0.01em;
+      text-wrap: balance;
+    }
+
+    .card p {
+      margin: 0.5rem 0 0;
+      color: hsl(var(--muted-foreground));
+      text-wrap: pretty;
+    }
+
+    .code {
+      margin-top: 0.9rem;
+      border: 1px solid hsl(var(--border));
+      background: hsl(var(--muted));
+      border-radius: calc(var(--radius) - 2px);
+      padding: 0.9rem 5.75rem 0.9rem 0.95rem; /* room for Copy button */
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.92rem;
+      overflow-x: auto;
+      position: relative;
+      -webkit-overflow-scrolling: touch;
+      max-width: 100%;
+      min-width: 0;
+    }
+    .code pre { margin: 0; }
+
+    .code-actions {
+      position: absolute;
+      top: 0.55rem;
+      right: 0.55rem;
+      display: inline-flex;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid hsl(var(--border));
+      background: hsl(var(--secondary));
+      color: hsl(var(--secondary-foreground));
+      font-weight: 650;
+      font-size: 0.78rem;
+      letter-spacing: 0.01em;
+    }
+
+    .section {
+      margin-top: 1rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-header h2 {
+      margin: 0;
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+      text-wrap: balance;
+    }
+
+    .rules-toolbar {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .input {
+      width: min(28rem, 100%);
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+      border: 1px solid hsl(var(--input));
+      padding: 0.55rem 0.75rem;
+      border-radius: calc(var(--radius) - 6px);
+      font-size: 1rem; /* prevent iOS zoom; maintain 16px minimum */
+      min-height: 44px;
+    }
+    .input:focus-visible {
+      outline: 2px solid hsl(var(--ring));
+      outline-offset: 2px;
+    }
+
+    .accordion {
+      border: 1px solid hsl(var(--border));
+      border-radius: var(--radius);
+      background: hsl(var(--card));
+      overflow: hidden;
+    }
+    .accordion + .accordion { margin-top: 0.75rem; }
+    .accordion summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 0.95rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .accordion summary::-webkit-details-marker { display: none; }
+    .accordion summary:hover { background: hsl(var(--accent)); }
+    .accordion[open] summary { border-bottom: 1px solid hsl(var(--border)); }
+    .accordion summary:focus-visible {
+      outline: none;
+      box-shadow: inset 0 0 0 2px hsl(var(--ring));
+    }
+
+    .accordion-body {
+      padding: 0.9rem 1rem 1rem;
+    }
+
+    .rule-list {
+      margin: 0.25rem 0 0;
+      padding-left: 1.25rem;
+      color: hsl(var(--muted-foreground));
+    }
+    .rule-list li { margin: 0.4rem 0; }
+
+    /* Responsive tables (defensive: if docs ever include tables) */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
+    }
+    th, td {
+      border: 1px solid hsl(var(--border));
+      padding: 0.5rem 0.65rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    thead th {
+      background: hsl(var(--muted));
+    }
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border: 1px solid hsl(var(--border));
+      border-radius: calc(var(--radius) - 2px);
+    }
+    .table-wrap > table { border: 0; }
+    .table-wrap th, .table-wrap td { white-space: nowrap; }
+
+    .footer {
+      margin-top: 2rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid hsl(var(--border));
+      color: hsl(var(--muted-foreground));
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .sr-only {
+      position: absolute !important;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>designr Rules</h1>
-            <p class="subtitle">Opinionated rules for building modern, accessible, and performant web applications</p>
-        </header>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="#top" aria-label="designr home">
+        <span>designr</span>
+        <small>rules</small>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a class="link" href="#install">Install</a>
+        <a class="link" href="#rules">Rules</a>
+        <a class="link" href="#manual">Manual</a>
+      </nav>
+    </div>
+  </header>
 
-        <div class="install-section">
-            <h2><span class="step-number">1</span>Install</h2>
-            <p style="margin: 1rem 0 1rem 2rem;">Run this command in your terminal:</p>
-            
-            <div style="position: relative; margin-left: 2rem;">
-                <pre class="code-block"><code id="install-command">curl -fsSL https://cedlll.github.io/designr/install | bash</code></pre>
-                <button class="copy-btn" onclick="copyInstallCommand()">Copy</button>
-            </div>
+  <main id="top" class="container">
+    <section class="hero">
+      <h1>Opinionated rules for modern, accessible, performant web apps.</h1>
+      <p>Drop-in guidance for how your AI coding tools should build UI: defaults, interaction, accessibility, performance, and production polish.</p>
+    </section>
 
-            <div class="usage-example" style="margin-left: 2rem;">
-                <strong>What this does:</strong> Installs the rules as a command in your AI coding tools (Claude Code, Cursor, OpenCode, Codex, Antigravity)
-            </div>
+    <section id="install" class="grid" aria-label="Install and use">
+      <div class="card">
+        <h2>Install</h2>
+        <p>Run this in your terminal to install the rules as a command.</p>
+        <div class="code">
+          <pre aria-label="Install command"><code id="install-command">curl -fsSL https://cedlll.github.io/designr/install | bash</code></pre>
+          <span class="code-actions"><button class="btn btn-ghost" type="button" data-copy="#install-command" aria-label="Copy install command">Copy</button></span>
         </div>
+      </div>
 
-        <div class="install-section">
-            <h2><span class="step-number">2</span>Use in Your Editor</h2>
-            <p style="margin: 1rem 0 1rem 2rem;">Type this command in your AI coding tool:</p>
-            
-            <div style="position: relative; margin-left: 2rem;">
-                <pre class="code-block"><code>/frontend-rules</code></pre>
-            </div>
-
-            <div class="usage-example" style="margin-left: 2rem;">
-                <strong>Example:</strong> In Cursor or Claude Code, type <code>/frontend-rules</code> and the AI will apply these rules to your project automatically.
-            </div>
+      <div class="card">
+        <h2>Use in your editor</h2>
+        <p>In Cursor / Claude Code, type the command below in your AI coding tool.</p>
+        <div class="code">
+          <pre aria-label="Use command"><code id="use-command">/designr</code></pre>
+          <span class="code-actions"><button class="btn btn-ghost" type="button" data-copy="#use-command" aria-label="Copy /designr command">Copy</button></span>
         </div>
+      </div>
+    </section>
 
-        <div class="install-section">
-            <h2>Supported Tools</h2>
-            <div class="supported-tools">
-                <div class="tool-badge">Claude Code</div>
-                <div class="tool-badge">Cursor</div>
-                <div class="tool-badge">OpenCode</div>
-                <div class="tool-badge">Codex</div>
-                <div class="tool-badge">Antigravity</div>
-            </div>
+    <section class="section" aria-label="What's included">
+      <div class="card">
+        <div class="section-header">
+          <h2>What’s included</h2>
+          <span class="badge" id="rules-count-badge" aria-live="polite" aria-atomic="true">Loading rules…</span>
         </div>
+        <ul class="rule-list" style="color: hsl(var(--muted-foreground)); margin: 0.5rem 0 0;">
+          <li>Tailwind defaults and conventions</li>
+          <li>Accessible primitives and keyboard/focus behavior</li>
+          <li>Interaction and error handling patterns</li>
+          <li>Animation constraints (compositor-only, reduced motion)</li>
+          <li>Performance guardrails and production standards</li>
+        </ul>
+      </div>
+    </section>
 
-        <div class="install-section">
-            <h2>What's Included</h2>
-            <ul class="features">
-                <li>Tailwind CSS best practices and defaults</li>
-                <li>Accessible component patterns (Base UI, React Aria, Radix)</li>
-                <li>Performance-focused animation guidelines</li>
-                <li>Mobile-first responsive design rules</li>
-                <li>Form validation and error handling patterns</li>
-                <li>State management and data fetching conventions</li>
-                <li>WCAG AA accessibility compliance</li>
-                <li>Production-ready loading and error states</li>
-            </ul>
+    <section id="rules" class="section" aria-label="designr rules">
+      <div class="section-header">
+        <h2>All rules</h2>
+        <div class="rules-toolbar">
+          <input id="rules-search" class="input" type="search" inputmode="search" autocomplete="off" placeholder="Search rules (e.g. 'skeleton', 'focus', 'z-index')…" aria-label="Search rules" />
+          <button class="btn btn-primary" type="button" id="copy-all-rules" aria-label="Copy all rules">Copy all</button>
         </div>
+      </div>
+      <div id="rules-container" aria-live="polite"></div>
+    </section>
 
-        <div class="install-section">
-            <h2>Manual Installation</h2>
-            <p style="margin-bottom: 1rem;">Prefer to review before installing?</p>
-            <pre class="code-block"><code>curl -fsSL https://cedlll.github.io/designr/install -o install.sh
+    <section id="manual" class="section" aria-label="Manual installation">
+      <div class="card">
+        <div class="section-header">
+          <h2>Manual installation</h2>
+          <a class="link" href="https://cedlll.github.io/designr/rules.md" target="_blank" rel="noreferrer">View docs<span class="sr-only"> (opens in a new tab)</span></a>
+        </div>
+        <p>Prefer to review before installing?</p>
+        <div class="code">
+          <pre aria-label="Manual install commands"><code id="manual-install">curl -fsSL https://cedlll.github.io/designr/install -o install.sh
 cat install.sh
 bash install.sh</code></pre>
-            <p style="margin-top: 1rem;"><a href="https://cedlll.github.io/designr/rules.md" target="_blank">View the full rules documentation →</a></p>
+          <span class="code-actions"><button class="btn btn-ghost" type="button" data-copy="#manual-install" aria-label="Copy manual install commands">Copy</button></span>
         </div>
+      </div>
+    </section>
 
-        <footer>
-            <p>Questions or suggestions? <a href="https://cedlll.github.io/designr/issues">Open an issue on GitHub</a></p>
-        </footer>
-    </div>
+    <footer class="footer">
+      <span>Questions or suggestions? <a href="https://cedlll.github.io/designr/issues" target="_blank" rel="noreferrer">Open an issue on GitHub<span class="sr-only"> (opens in a new tab)</span></a></span>
+    </footer>
+  </main>
 
-    <script>
-        function copyInstallCommand() {
-            const code = document.getElementById('install-command').textContent;
-            navigator.clipboard.writeText(code).then(() => {
-                const btn = event.target;
-                const originalText = btn.textContent;
-                btn.textContent = 'Copied!';
-                btn.classList.add('copied');
-                setTimeout(() => {
-                    btn.textContent = originalText;
-                    btn.classList.remove('copied');
-                }, 2000);
-            });
+  <!-- Single source of truth: embed designr.md and parse it into UI -->
+  <script type="text/plain" id="rules-md">
+> Type `/designr` to apply these rules to your current project
+
+## Stack
+
+- MUST use Tailwind CSS defaults unless custom values already exist or are explicitly requested
+- MUST use motion/react (formerly framer-motion) when JavaScript animation is required
+- SHOULD use tw-animate-css for entrance and micro-animations in Tailwind CSS
+- MUST use cn utility (clsx + tailwind-merge) for class logic
+- SHOULD NOT introduce custom Tailwind config values without design sign-off
+
+## Components
+
+- MUST use accessible component primitives for anything with keyboard or focus behavior (Base UI, React Aria, Radix)
+- MUST use the project's existing component primitives first
+- NEVER mix primitive systems within the same interaction surface
+- SHOULD prefer Base UI for new primitives if compatible with the stack
+- MUST add an aria-label to icon-only buttons
+- NEVER rebuild keyboard or focus behavior by hand unless explicitly requested
+- SHOULD prefer Base UI unless a required pattern is better supported elsewhere
+- CHOOSE Radix UI for developer speed and standard accessible components unless a required pattern is better supported elsewhere
+- CHOOSE React Aria for complex widgets like date pickers or enterprise-grade internationalization and mobile precision unless a required pattern is better supported elsewhere
+
+## Interaction
+
+- MUST use an AlertDialog for destructive or irreversible actions
+- SHOULD use structural skeletons for loading states
+- NEVER use h-screen, use h-dvh
+- MUST respect safe-area-inset for fixed elements
+- MUST show errors next to where the action happens
+- NEVER block paste in input or textarea elements
+- MUST keep focus within the error context after failure
+
+## Animation
+
+- NEVER add decorative animation unless requested OR part of an established system pattern (e.g. existing hover, focus, or disclosure animations)
+- MUST provide functional animation for state feedback (hover, press, focus, disabled)
+- MUST animate only compositor props (transform, opacity)
+- NEVER animate layout properties (width, height, top, left, margin, padding)
+- SHOULD avoid animating paint properties (background, color) except for small, local UI (text, icons, state indicators)
+- SHOULD use ease-out on entrance, ease-in on exit, ease-in-out for reversible interactions
+- NEVER exceed 200ms for interaction feedback, 300ms for entrance/exit
+- MUST pause looping animations when off-screen
+- MUST respect prefers-reduced-motion by removing non-essential motion
+- NEVER introduce custom easing curves unless explicitly requested
+- SHOULD avoid animating large images or full-screen surfaces
+
+## Typography
+
+- MUST use text-balance for headings and text-pretty for body/paragraphs
+- MUST use tabular-nums for data tables and numeric comparisons
+- SHOULD use truncate or line-clamp for dense UI
+- MUST provide a way to access full content when truncated
+- NEVER modify letter-spacing (tracking-*) unless explicitly requested
+- MUST maintain minimum 16px base font size for body text
+- SHOULD use system font stack unless brand typography is explicitly required
+
+## Layout
+
+- MUST use a fixed z-index scale: 0 (base), 10 (dropdowns), 20 (sticky headers), 30 (modals), 40 (popovers), 50 (toasts)
+- SHOULD use size-* for square elements instead of w-* + h-*
+- MUST design mobile-first, enhance at sm: (640px), md: (768px), lg: (1024px), xl: (1280px)
+- SHOULD use container queries (@container) for component-level responsive behavior
+- NEVER rely on specific pixel dimensions for touch targets - MUST be minimum 44×44px
+
+## Performance
+
+- NEVER animate large blur() or backdrop-filter surfaces
+- NEVER apply will-change outside an active animation
+- NEVER use useEffect for anything that can be expressed as render logic
+- MUST lazy-load images below the fold with loading="lazy"
+- SHOULD debounce search inputs and autocomplete (minimum 300ms)
+- MUST virtualize lists with 100+ items
+- SHOULD avoid unnecessary re-renders before introducing memoization
+- MUST implement a working code that is production-grade and functional and meticulously refined in every detail
+
+## Design
+
+- NEVER use gradients unless explicitly requested
+- NEVER use purple or multicolor gradients
+- NEVER use glow effects as primary affordances
+- SHOULD use Tailwind CSS default shadow scale unless explicitly requested
+- MUST give empty states one clear next action
+- SHOULD limit primary accent color to one per view
+- MAY use semantic colors (success/warning/error/info) in addition to primary accent
+- SHOULD use existing theme or Tailwind CSS color tokens before introducing new ones
+- MUST maintain 4.5:1 contrast ratio for body text, 3:1 for large text (WCAG AA)
+
+## Colors
+
+- MUST use modern CSS color functions (oklch, color-mix, light-dark) for perceptually uniform and maintainable palettes, unless otherwise specified
+
+## Form Validation
+
+- MUST validate on blur for individual fields, on submit for entire form
+- NEVER validate on every keystroke unless explicitly required (e.g., password strength)
+- MUST show field-level errors inline, immediately below the input
+- SHOULD show success states only for high-stakes fields (password, email verification)
+- MUST disable submit button only when form is submitting, not when invalid
+- SHOULD provide helpful error messages with actionable guidance, not just "Invalid input"
+- MUST maintain focus on the first invalid field after failed submission
+- NEVER clear form data on validation error unless explicitly requested
+
+## Loading States
+
+- MUST show skeleton UI for content that's loading for the first time
+- SHOULD show spinners only for quick actions (<3 seconds expected)
+- MUST show progress indicators for operations >3 seconds with known duration
+- SHOULD show optimistic UI updates for mutations when rollback is possible
+- NEVER block the entire page for partial data loading
+- MUST provide "Cancel" for long-running operations when feasible
+- SHOULD cache and show stale data with indicator while revalidating
+
+## State Management
+
+- MUST use URL state for shareable/bookmarkable UI (filters, tabs, search, pagination)
+- SHOULD use server state libraries (TanStack Query, SWR) for async data
+- MUST colocate component state with useState unless needed by siblings
+- SHOULD lift state only as high as necessary for sharing
+- NEVER store derived values in state - compute during render
+- MUST use reducers for complex state with multiple related updates
+- SHOULD avoid prop drilling beyond 2-3 levels - use context or composition
+
+## Error Handling
+
+- MUST show user-friendly error messages, never raw technical errors
+- SHOULD provide retry mechanism for failed network requests
+- MUST preserve user input during errors (form data, drafts)
+- SHOULD log errors to monitoring service (Sentry, LogRocket) with user context
+- MUST have error boundaries for top-level route/page components
+- SHOULD show graceful fallback UI in error boundaries, not blank screens
+- NEVER use console.error as primary error handling strategy
+
+## Data Fetching
+
+- MUST handle loading, success, and error states for all async operations
+- SHOULD implement request deduplication for concurrent identical requests
+- MUST set reasonable timeouts (10-30s depending on operation)
+- SHOULD implement retry logic with exponential backoff for transient failures
+- MUST cancel pending requests on component unmount or navigation
+- SHOULD prefetch data for likely next user actions (hover, route preload)
+
+## Accessibility
+
+- MUST provide visible focus indicators that meet 3:1 contrast ratio
+- MUST ensure all interactive elements are keyboard accessible
+- SHOULD follow ARIA Authoring Practices for complex widgets
+- MUST provide alt text for informative images, empty alt for decorative
+- SHOULD announce dynamic content changes to screen readers via ARIA live regions
+- MUST support keyboard shortcuts for power users without breaking screen readers
+- SHOULD provide skip links for keyboard navigation on content-heavy pages
+
+## Mobile Considerations
+
+- MUST prevent zoom on input focus (use 16px minimum font size)
+- SHOULD use native inputs (type="email", type="tel") for appropriate mobile keyboards
+- MUST make tap targets minimum 44×44px with adequate spacing
+- SHOULD use inputmode attribute to show optimized mobile keyboards
+- MUST handle orientation changes gracefully
+- SHOULD minimize fixed elements that consume vertical space on mobile
+- NEVER rely on hover states for critical functionality
+  </script>
+
+  <script>
+    function parseRules(md) {
+      const lines = md.split(/\r?\n/);
+      const intro = [];
+      const sections = [];
+      let current = null;
+
+      for (const raw of lines) {
+        const line = raw.trimEnd();
+        if (!line.trim()) continue;
+
+        if (line.startsWith("> ")) {
+          intro.push(line.slice(2).trim());
+          continue;
         }
-    </script>
+
+        if (line.startsWith("## ")) {
+          current = { title: line.slice(3).trim(), rules: [] };
+          sections.push(current);
+          continue;
+        }
+
+        if (line.startsWith("- ")) {
+          if (!current) {
+            current = { title: "Rules", rules: [] };
+            sections.push(current);
+          }
+          current.rules.push(line.slice(2).trim());
+        }
+      }
+
+      return { intro, sections };
+    }
+
+    function escapeHtml(s) {
+      return s
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function renderRules({ intro, sections }) {
+      const container = document.getElementById("rules-container");
+      if (!container) return;
+
+      const totalRules = sections.reduce((acc, s) => acc + s.rules.length, 0);
+      const badge = document.getElementById("rules-count-badge");
+      if (badge) badge.textContent = `${totalRules} rules`;
+
+      const introHtml = intro.length
+        ? `<div class="card" style="margin-bottom: 0.75rem;"><p style="margin: 0; color: hsl(var(--muted-foreground));">${escapeHtml(intro.join(" "))}</p></div>`
+        : "";
+
+      const accordions = sections
+        .map((s, idx) => {
+          const list = s.rules.map((r) => `<li>${escapeHtml(r)}</li>`).join("");
+          const openAttr = idx === 0 ? " open" : "";
+          return `
+            <details class="accordion"${openAttr} data-section>
+              <summary>
+                <span>${escapeHtml(s.title)}</span>
+                <span class="badge">${s.rules.length}</span>
+              </summary>
+              <div class="accordion-body">
+                <ul class="rule-list" data-rule-list>${list}</ul>
+                <div style="margin-top: 0.9rem; display: flex; justify-content: flex-end;">
+                  <button class="btn" type="button" data-copy-section="${escapeHtml(s.title)}" aria-label="Copy ${escapeHtml(s.title)} rules">Copy section</button>
+                </div>
+              </div>
+            </details>
+          `;
+        })
+        .join("");
+
+      container.innerHTML = introHtml + accordions;
+    }
+
+    function getRulesMarkdown() {
+      const el = document.getElementById("rules-md");
+      return el ? el.textContent.trim() : "";
+    }
+
+    async function copyToClipboard(text) {
+      // Clipboard API can be blocked on file:// or without permissions.
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(text);
+          return true;
+        }
+      } catch {}
+
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.left = "-9999px";
+        ta.style.top = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        const ok = document.execCommand && document.execCommand("copy");
+        document.body.removeChild(ta);
+        return !!ok;
+      } catch {
+        return false;
+      }
+    }
+
+    async function copyText(text, button) {
+      const prev = button.textContent;
+      button.textContent = "Copying…";
+      const ok = await copyToClipboard(text);
+      button.textContent = ok ? "Copied" : "Copy failed";
+      setTimeout(() => { button.textContent = prev; }, 1200);
+    }
+
+    function wireCopyButtons() {
+      document.addEventListener("click", async (e) => {
+        const target = e.target;
+        if (!(target instanceof HTMLElement)) return;
+        const btn = target.closest("button[data-copy], button[data-copy-section]");
+        if (!(btn instanceof HTMLElement)) return;
+
+        const copySel = btn.getAttribute("data-copy");
+        if (copySel) {
+          const node = document.querySelector(copySel);
+          if (node) await copyText(node.textContent || "", btn);
+          return;
+        }
+
+        const sectionTitle = btn.getAttribute("data-copy-section");
+        if (sectionTitle) {
+          const md = getRulesMarkdown();
+          const parsed = parseRules(md);
+          const section = parsed.sections.find((s) => s.title === sectionTitle);
+          if (!section) return;
+          const text = [`## ${section.title}`, "", ...section.rules.map((r) => `- ${r}`)].join("\n");
+          await copyText(text, btn);
+        }
+      });
+    }
+
+    function wireSearch(md) {
+      const input = document.getElementById("rules-search");
+      if (!input) return;
+
+      const parsed = parseRules(md);
+
+      function applyFilter(q) {
+        const query = q.trim().toLowerCase();
+        const sections = Array.from(document.querySelectorAll("[data-section]"));
+
+        let visibleRules = 0;
+        for (const sEl of sections) {
+          const title = (sEl.querySelector("summary span")?.textContent || "").toLowerCase();
+          const liEls = Array.from(sEl.querySelectorAll("li"));
+
+          let anyVisible = false;
+          for (const li of liEls) {
+            const t = (li.textContent || "").toLowerCase();
+            const match = !query || t.includes(query) || title.includes(query);
+            li.style.display = match ? "" : "none";
+            anyVisible = anyVisible || match;
+            if (match && t) visibleRules += 1;
+          }
+          sEl.style.display = anyVisible ? "" : "none";
+          if (query && anyVisible) sEl.open = true;
+        }
+
+        const badge = document.getElementById("rules-count-badge");
+        if (badge) badge.textContent = query ? `${visibleRules} matches` : `${parsed.sections.reduce((acc, s) => acc + s.rules.length, 0)} rules`;
+      }
+
+      input.addEventListener("input", () => applyFilter(input.value));
+    }
+
+    function initRules() {
+      const md = getRulesMarkdown();
+      const parsed = parseRules(md);
+      renderRules(parsed);
+      wireSearch(md);
+
+      const copyAll = document.getElementById("copy-all-rules");
+      if (copyAll) {
+        copyAll.addEventListener("click", async () => {
+          await copyText(md, copyAll);
+        });
+      }
+    }
+
+    wireCopyButtons();
+    initRules();
+  </script>
 </body>
 </html>
-EOF
