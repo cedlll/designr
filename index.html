@@ -1,0 +1,255 @@
+cat > index.html << 'EOF'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend Development Rules</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #fafafa;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        header {
+            text-align: center;
+            padding: 4rem 0 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            font-size: 1.25rem;
+            color: #666;
+            margin-bottom: 3rem;
+        }
+        
+        .install-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .code-block {
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 1.5rem;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.95rem;
+            overflow-x: auto;
+            position: relative;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #333;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+        
+        .copy-btn:hover {
+            background: #444;
+        }
+        
+        .copy-btn.copied {
+            background: #00aa00;
+        }
+        
+        .usage-example {
+            background: #f8f8f8;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+            border-left: 4px solid #0066cc;
+        }
+        
+        .supported-tools {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .tool-badge {
+            background: #f0f0f0;
+            padding: 0.75rem;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .features {
+            list-style: none;
+            margin: 2rem 0;
+        }
+        
+        .features li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #00aa00;
+            font-weight: bold;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 3rem 0 2rem;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 4rem;
+        }
+        
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .manual-install {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: #0066cc;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            margin-right: 0.5rem;
+            font-weight: bold;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Frontend Development Rules</h1>
+            <p class="subtitle">Opinionated rules for building modern, accessible, and performant web applications</p>
+        </header>
+
+        <div class="install-section">
+            <h2><span class="step-number">1</span>Install</h2>
+            <p style="margin: 1rem 0 1rem 2rem;">Run this command in your terminal:</p>
+            
+            <div style="position: relative; margin-left: 2rem;">
+                <pre class="code-block"><code id="install-command">curl -fsSL https://yourusername.github.io/frontend-rules/install | bash</code></pre>
+                <button class="copy-btn" onclick="copyInstallCommand()">Copy</button>
+            </div>
+
+            <div class="usage-example" style="margin-left: 2rem;">
+                <strong>What this does:</strong> Installs the rules as a command in your AI coding tools (Claude Code, Cursor, OpenCode, Codex, Antigravity)
+            </div>
+        </div>
+
+        <div class="install-section">
+            <h2><span class="step-number">2</span>Use in Your Editor</h2>
+            <p style="margin: 1rem 0 1rem 2rem;">Type this command in your AI coding tool:</p>
+            
+            <div style="position: relative; margin-left: 2rem;">
+                <pre class="code-block"><code>/frontend-rules</code></pre>
+            </div>
+
+            <div class="usage-example" style="margin-left: 2rem;">
+                <strong>Example:</strong> In Cursor or Claude Code, type <code>/frontend-rules</code> and the AI will apply these rules to your project automatically.
+            </div>
+        </div>
+
+        <div class="install-section">
+            <h2>Supported Tools</h2>
+            <div class="supported-tools">
+                <div class="tool-badge">Claude Code</div>
+                <div class="tool-badge">Cursor</div>
+                <div class="tool-badge">OpenCode</div>
+                <div class="tool-badge">Codex</div>
+                <div class="tool-badge">Antigravity</div>
+            </div>
+        </div>
+
+        <div class="install-section">
+            <h2>What's Included</h2>
+            <ul class="features">
+                <li>Tailwind CSS best practices and defaults</li>
+                <li>Accessible component patterns (Base UI, React Aria, Radix)</li>
+                <li>Performance-focused animation guidelines</li>
+                <li>Mobile-first responsive design rules</li>
+                <li>Form validation and error handling patterns</li>
+                <li>State management and data fetching conventions</li>
+                <li>WCAG AA accessibility compliance</li>
+                <li>Production-ready loading and error states</li>
+            </ul>
+        </div>
+
+        <div class="install-section">
+            <h2>Manual Installation</h2>
+            <p style="margin-bottom: 1rem;">Prefer to review before installing?</p>
+            <pre class="code-block"><code>curl -fsSL https://yourusername.github.io/frontend-rules/install -o install.sh
+cat install.sh
+bash install.sh</code></pre>
+            <p style="margin-top: 1rem;"><a href="https://yourusername.github.io/frontend-rules/rules.md" target="_blank">View the full rules documentation →</a></p>
+        </div>
+
+        <footer>
+            <p>Questions or suggestions? <a href="https://github.com/yourusername/frontend-rules/issues">Open an issue on GitHub</a></p>
+        </footer>
+    </div>
+
+    <script>
+        function copyInstallCommand() {
+            const code = document.getElementById('install-command').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
+EOF
