@@ -71,8 +71,9 @@
 - SHOULD debounce search inputs and autocomplete (minimum 300ms)
 - MUST virtualize lists with 100+ items
 - SHOULD avoid unnecessary re-renders before introducing memoization
+- MUST implement a working code that is production-grade and functional and meticulously refined in every detail
 
-## Design (Revised)
+## Design
 
 - NEVER use gradients unless explicitly requested
 - NEVER use purple or multicolor gradients
@@ -83,6 +84,10 @@
 - MAY use semantic colors (success/warning/error/info) in addition to primary accent
 - SHOULD use existing theme or Tailwind CSS color tokens before introducing new ones
 - MUST maintain 4.5:1 contrast ratio for body text, 3:1 for large text (WCAG AA)
+
+## Colors
+
+- MUST use modern CSS color functions (oklch, color-mix, light-dark) for perceptually uniform and maintainable palettes, unless otherwise specified
 
 ## Form Validation
 
