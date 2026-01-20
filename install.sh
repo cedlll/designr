@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+set -euo pipefail
+
 # fetch from repo
 RAW="https://cedlll.github.io/designr/designr.md"
 COUNT_NAMESPACE="cedlll.github.io"

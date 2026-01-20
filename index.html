@@ -509,6 +509,9 @@
     <section class="hero">
       <h1>/designr</h1>
       <p>Opinionated rules for modern, accessible, performant web apps by <a href="https://www.cclee.design/" target="_blank" rel="noreferrer">Cedric Lee</a></p>
+      <div style="margin-top: 0.9rem; display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+        <span id="install-count-badge" class="badge" aria-label="Install count">Loading installs…</span>
+      </div>
     </section>
 
     <section id="install" class="section" aria-label="Installation">
@@ -905,8 +908,28 @@
       wireSearch(md);
     }
 
+    async function initInstallCount() {
+      const el = document.getElementById("install-count-badge");
+      if (!el) return;
+
+      const namespace = "cedlll.github.io";
+      const key = "designr_installs";
+      const url = `https://api.countapi.xyz/get/${encodeURIComponent(namespace)}/${encodeURIComponent(key)}`;
+
+      try {
+        const res = await fetch(url, { cache: "no-store" });
+        if (!res.ok) throw new Error("Request failed");
+        const data = await res.json();
+        const value = typeof data?.value === "number" ? data.value : 0;
+        el.textContent = `${value.toLocaleString()} installs`;
+      } catch {
+        el.textContent = "0 installs";
+      }
+    }
+
     wireCopyButtons();
     initRules();
+    initInstallCount();
     </script>
 </body>
 </html>
