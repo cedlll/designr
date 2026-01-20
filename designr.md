@@ -6,6 +6,7 @@
 - MUST use motion/react (formerly framer-motion) when JavaScript animation is required
 - SHOULD use tw-animate-css for entrance and micro-animations in Tailwind CSS
 - MUST use cn utility (clsx + tailwind-merge) for class logic
+- SHOULD NOT introduce custom Tailwind config values without design sign-off
 
 ## Components
 
@@ -15,6 +16,9 @@
 - SHOULD prefer Base UI for new primitives if compatible with the stack
 - MUST add an aria-label to icon-only buttons
 - NEVER rebuild keyboard or focus behavior by hand unless explicitly requested
+- SHOULD prefer Base UI unless a required pattern is better supported elsewhere
+- CHOOSE Radix UI for developer speed and standard accessible components unless a required pattern is better supported elsewhere
+- CHOOSE React Aria for complex widgets like date pickers or enterprise-grade internationalization and mobile precision unless a required pattern is better supported elsewhere
 
 ## Interaction
 
@@ -24,10 +28,11 @@
 - MUST respect safe-area-inset for fixed elements
 - MUST show errors next to where the action happens
 - NEVER block paste in input or textarea elements
+- MUST keep focus within the error context after failure
 
-## Animation (Revised)
+## Animation
 
-- NEVER add decorative animation unless explicitly requested
+- NEVER add decorative animation unless requested OR part of an established system pattern (e.g. existing hover, focus, or disclosure animations)
 - MUST provide functional animation for state feedback (hover, press, focus, disabled)
 - MUST animate only compositor props (transform, opacity)
 - NEVER animate layout properties (width, height, top, left, margin, padding)
@@ -44,6 +49,7 @@
 - MUST use text-balance for headings and text-pretty for body/paragraphs
 - MUST use tabular-nums for data tables and numeric comparisons
 - SHOULD use truncate or line-clamp for dense UI
+- MUST provide a way to access full content when truncated
 - NEVER modify letter-spacing (tracking-*) unless explicitly requested
 - MUST maintain minimum 16px base font size for body text
 - SHOULD use system font stack unless brand typography is explicitly required
@@ -64,6 +70,7 @@
 - MUST lazy-load images below the fold with loading="lazy"
 - SHOULD debounce search inputs and autocomplete (minimum 300ms)
 - MUST virtualize lists with 100+ items
+- SHOULD avoid unnecessary re-renders before introducing memoization
 
 ## Design (Revised)
 
