@@ -1,6 +1,3 @@
-cat > rules.md << 'EOF'
-# designr Rules
-
 > Type `/designr-rules` to apply these rules to your current project
 
 ## Stack
@@ -149,4 +146,3 @@ SHOULD use inputmode attribute to show optimized mobile keyboards
 MUST handle orientation changes gracefully
 SHOULD minimize fixed elements that consume vertical space on mobile
 NEVER rely on hover states for critical functionality
-EOF
