@@ -165,7 +165,7 @@
       padding: 0.9rem 5.75rem 0.9rem 0.95rem; /* room for Copy button */
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size: 0.92rem;
-      overflow-x: auto;
+            overflow-x: auto;
       -webkit-overflow-scrolling: touch;
     }
 
@@ -260,7 +260,7 @@
       background: hsl(var(--muted) / 0.5);
       border-radius: calc(var(--radius) - 4px);
       color: hsl(var(--muted-foreground));
-      cursor: pointer;
+            cursor: pointer;
       transition: all 0.15s ease;
     }
     .copy-icon-btn:hover { 
@@ -304,14 +304,14 @@
     }
 
     .section {
-      margin-top: 1rem;
+            margin-top: 1rem;
     }
 
     .section-header {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      gap: 1rem;
+            gap: 1rem;
       margin-bottom: 1.25rem;
     }
 
@@ -344,12 +344,12 @@
     }
 
     .search {
-      position: relative;
+            position: relative;
       width: min(28rem, 100%);
-    }
-
+        }
+        
     .search-icon {
-      position: absolute;
+            position: absolute;
       left: 0.75rem;
       top: 50%;
       transform: translateY(-50%);
@@ -474,9 +474,6 @@
     <section class="hero">
       <h1>/designr</h1>
       <p>Rules library for modern, accessible, performant web apps by <a href="https://www.cclee.design/" target="_blank" rel="noreferrer">Cedric Lee<span class="sr-only"> (opens in a new tab)</span></a></p>
-      <div style="margin-top: 0.9rem; display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
-        <span id="install-count-badge" class="badge" aria-label="Install count" aria-live="polite" aria-atomic="true">Loading installs…</span>
-      </div>
     </section>
 
     <section id="install" class="section" aria-label="Installation">
@@ -508,7 +505,7 @@
         <div class="usage-row">
           <code>/designr src/App.tsx</code>
           <span class="terminal-muted">— apply these rules with a specific file in context</span>
-        </div>
+            </div>
         </div>
     </section>
 
@@ -875,34 +872,8 @@
       wireSearch(md);
     }
 
-    async function initInstallCount() {
-      const el = document.getElementById("install-count-badge");
-      if (!el) return;
-
-      function formatInstallCount(value) {
-        const n = Number.isFinite(value) ? Math.max(0, Math.floor(value)) : 0;
-        const label = n === 1 ? "installed" : "installs";
-        return `${n.toLocaleString()} ${label}`;
-      }
-
-      const namespace = "cedlll.github.io";
-      const key = "designr_installs";
-      const url = `https://api.countapi.xyz/get/${encodeURIComponent(namespace)}/${encodeURIComponent(key)}`;
-
-      try {
-        const res = await fetch(url, { cache: "no-store" });
-        if (!res.ok) throw new Error("Request failed");
-        const data = await res.json();
-        const value = typeof data?.value === "number" ? data.value : 0;
-        el.textContent = formatInstallCount(value);
-      } catch {
-        el.textContent = formatInstallCount(0);
-      }
-    }
-
     wireCopyButtons();
     initRules();
-    initInstallCount();
     </script>
 </body>
 </html>
