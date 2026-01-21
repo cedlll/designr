@@ -1,6 +1,6 @@
 # designr
 
-Opinionated rules for modern, accessible, performant web apps—intended as drop-in guidance for how your AI coding tools should build UI (defaults, interaction, accessibility, performance, production polish).
+Rules library for modern, accessible, performant web apps—intended as drop-in guidance for how your AI coding tools should build UI (defaults, interaction, accessibility, performance, production polish).
 
 ## What this repo contains
 
@@ -12,11 +12,11 @@ Opinionated rules for modern, accessible, performant web apps—intended as drop
 - **Install (as a command)**:
 
 ```bash
-curl -fsSL https://cedlll.github.io/designr/install | bash
+curl -fsSL https://cedlll.github.io/designr/install.sh | bash
 ```
 
 - **Apply in your AI coding tool**: type `/designr`
 
 ## Built by
 
-Built by **Cedric Lee** — [cclee.design](https://www.cclee.design/)
+**Cedric Lee** — [cclee.design](https://www.cclee.design/)
